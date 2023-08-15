@@ -1,8 +1,10 @@
-defmodule Stack do
+# Telephone sets up a circular linked list of messages to pass around
+
+
+defmodule Telephone do
   use GenServer
 
   # Client Code
-
   def start_link(default) do
     GenServer.start_link(__MODULE__, default)
   end
@@ -16,11 +18,9 @@ defmodule Stack do
   end
 
   # Server Code
-
   @impl true
-  def init(elements) do
-    initial_state = String.split(elements, ",", trim: true)
-    {:ok, initial_state}
+  def init(_) do
+    {:ok, %{}}
   end
 
   @impl true
