@@ -6,19 +6,19 @@ defmodule Sum do
     GenServer.start_link(__MODULE__, default)
   end
 
+  @spec tally(atom | pid | {atom, any} | {:via, atom, any}) :: any
   def tally(pid) do
     GenServer.call(pid, :tally)
   end
 
   # Server Code
   @impl true
-  def init(elements) do
-    state = List.foldl(elements, 0, fn (elem, acc) -> elem + acc end)
-    {:ok, state}
+  def init(_) do
+    {:ok, 0}
   end
 
   @impl true
   def handle_call(:tally, _from, state) do
-    {:noreply, state}
+    {:reply, state, state}
   end
 end

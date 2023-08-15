@@ -3,7 +3,7 @@ defmodule Stack do
 
   # Client Code
 
-  def start_link(default) when is_binary(default) do
+  def start_link(default) do
     GenServer.start_link(__MODULE__, default)
   end
 
