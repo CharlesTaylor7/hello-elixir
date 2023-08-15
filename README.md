@@ -1,21 +1,3 @@
-# ParallelSum
+# Hello Elixir
 
-**TODO: Add description**
-
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `parallel_sum` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:parallel_sum, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/parallel_sum>.
-
+This repo is an unfocused collection of small elixir apps, for the purposes of learning Elixir, the Actor model and about the OTP libraries.
