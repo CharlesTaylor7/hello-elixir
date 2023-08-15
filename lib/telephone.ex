@@ -1,6 +1,4 @@
-# Telephone sets up a circular linked list of messages to pass around
-
-
+# Telephone sets up a linked list of messages to pass around
 defmodule Telephone do
   use GenServer
 
@@ -9,12 +7,12 @@ defmodule Telephone do
     GenServer.start_link(__MODULE__, default)
   end
 
-  def push(pid, element) do
-    GenServer.cast(pid, {:push, element})
+  def push(pid, next) do
+    GenServer.cast(pid, {:push, next})
   end
 
-  def pop(pid) do
-    GenServer.call(pid, :pop)
+  def message(pid, count \\ 0) do
+    GenServer.cast(pid, {:message, count})
   end
 
   # Server Code
@@ -24,19 +22,18 @@ defmodule Telephone do
   end
 
   @impl true
-  def handle_call(:pop, _from, state) do
-    case state do
-      [to_caller | new_state] ->
-        {:reply, to_caller, new_state}
-
-      _ ->
-        {:reply, nil, []}
-    end
+  def handle_cast({:push, next}, state) do
+    {:noreply, Map.put(state, :next, next)}
   end
 
   @impl true
-  def handle_cast({:push, element}, state) do
-    new_state = [element | state]
-    {:noreply, new_state}
+  def handle_cast({:message, count}, state) do
+    IO.puts("Hello #{count}")
+    case state.next do
+      :nil -> :nil
+      next -> Telephone.message(next, count + 1)
+    end
+
+    {:noreply, state}
   end
 end

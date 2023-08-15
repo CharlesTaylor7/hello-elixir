@@ -1,4 +1,4 @@
-defmodule ParallelSum.MixProject do
+defmodule HelloElixir.MixProject do
   use Mix.Project
 
   def project do
@@ -15,7 +15,7 @@ defmodule ParallelSum.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {ParallelSum, []}
+      mod: {Main, []}
     ]
   end
 
