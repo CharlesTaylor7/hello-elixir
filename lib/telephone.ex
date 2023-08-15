@@ -9,6 +9,7 @@ defmodule Telephone do
 
   # Client Code
   def start_link(default) do
+    IO.puts("start link!")
     GenServer.start_link(__MODULE__, default)
   end
 
@@ -41,7 +42,7 @@ defmodule Telephone do
   def handle_cast({:message, count}, state) do
     IO.puts("Hello #{count}")
     case state[:next] do
-      :nil -> :nil
+      nil -> nil
       next -> Telephone.message(next, count + 1)
     end
 
