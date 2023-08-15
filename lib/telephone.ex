@@ -1,5 +1,10 @@
-# Telephone sets up a linked list of messages to pass around
+
 defmodule Telephone do
+  @moduledoc """
+  Telephone sets up a distributed linked list of nodes.
+  You can push a new node by calling, Telephone.push.
+  Or you can message a node and all its decsendants by calling Telephone.message.
+  """
   use GenServer
 
   # Client Code
@@ -7,10 +12,16 @@ defmodule Telephone do
     GenServer.start_link(__MODULE__, default)
   end
 
+  @doc """
+  Replace the next node of the telephone chain with a telephone pid
+  """
   def push(pid, next) do
     GenServer.cast(pid, {:push, next})
   end
 
+  @doc """
+  Print hello from each node in the chain.
+  """
   def message(pid, count \\ 0) do
     GenServer.cast(pid, {:message, count})
   end
@@ -29,7 +40,7 @@ defmodule Telephone do
   @impl true
   def handle_cast({:message, count}, state) do
     IO.puts("Hello #{count}")
-    case state.next do
+    case state[:next] do
       :nil -> :nil
       next -> Telephone.message(next, count + 1)
     end
