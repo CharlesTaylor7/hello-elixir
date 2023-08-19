@@ -1,4 +1,3 @@
-
 defmodule Telephone do
   @moduledoc """
   Telephone sets up a distributed linked list of nodes.
@@ -21,6 +20,13 @@ defmodule Telephone do
   end
 
   @doc """
+  Count the length of the chain
+  """
+  def count(pid) do
+    GenServer.call(pid, {:count})
+  end
+
+  @doc """
   Print hello from each node in the chain.
   """
   def message(pid, count \\ 0) do
@@ -34,13 +40,27 @@ defmodule Telephone do
   end
 
   @impl true
+  def handle_call(:count, _from, state) do
+    IO.puts("receive :count")
+
+    count = case state[:next] do
+      nil -> 0
+      next -> 1 + Telephone.count(next)
+    end
+    {:reply, count, state}
+  end
+
+  @impl true
   def handle_cast({:push, next}, state) do
+    IO.puts("receive :push")
     {:noreply, Map.put(state, :next, next)}
   end
 
   @impl true
   def handle_cast({:message, count}, state) do
+    IO.puts("receive :message")
     IO.puts("Hello #{count}")
+
     case state[:next] do
       nil -> nil
       next -> Telephone.message(next, count + 1)

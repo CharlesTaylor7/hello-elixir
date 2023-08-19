@@ -15,7 +15,8 @@ defmodule HelloElixir.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {Main, []}
+      # mod: {TelephoneApp, []},
+      mod: {SupervisorApp, []},
     ]
   end
 
