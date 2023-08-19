@@ -6,17 +6,20 @@ defmodule SupervisorApp do
 
     {:ok, parent_pid} = DynamicSupervisor.start_link(strategy: :one_for_one)
 
-    {:ok, child_pid} = DynamicSupervisor.start_child(parent_pid, IOPutServer)
+    {:ok, child_pid} = DynamicSupervisor.start_child(parent_pid, {IOPutServer, []})
 
     IOPutServer.message(child_pid, "hello")
 
-    IO.puts(Process.info(child_pid))
     {:ok, parent_pid}
   end
 end
 
 defmodule IOPutServer do
   use GenServer
+
+  def start_link(_args) do
+    GenServer.start_link(__MODULE__, nil, name: __MODULE__)
+  end
 
   def init(_init) do
     {:ok, nil}
