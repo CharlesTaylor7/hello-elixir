@@ -7,9 +7,8 @@ defmodule Telephone do
   use GenServer
 
   # Client Code
-  def start_link(default) do
-    IO.puts("start link!")
-    GenServer.start_link(__MODULE__, default)
+  def start_link(args) do
+    GenServer.start_link(__MODULE__, args)
   end
 
   @doc """
