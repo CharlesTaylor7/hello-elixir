@@ -2,8 +2,6 @@ defmodule SupervisorApp do
   use Application
 
   def start(_type, _args) do
-    IO.puts("hello, world!")
-
     {:ok, parent_pid} = DynamicSupervisor.start_link(strategy: :one_for_one)
 
     {:ok, child_pid} = DynamicSupervisor.start_child(parent_pid, IOPutServer)
