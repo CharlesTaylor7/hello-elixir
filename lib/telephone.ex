@@ -43,10 +43,12 @@ defmodule Telephone do
   def handle_call(:count, _from, state) do
     IO.puts("receive :count")
 
-    count = case state[:next] do
-      nil -> 0
-      next -> 1 + Telephone.count(next)
-    end
+    count =
+      case state[:next] do
+        nil -> 0
+        next -> 1 + Telephone.count(next)
+      end
+
     {:reply, count, state}
   end
 
