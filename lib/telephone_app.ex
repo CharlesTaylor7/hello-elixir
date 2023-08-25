@@ -12,16 +12,10 @@ defmodule TelephoneApp do
       pid = pids |> Enum.at(index)
       next_pid = pids |> Enum.at(index + 1)
 
-      child_spec = %{
-        id: pid,
-        start: {Telephone, :start_link, [[]]}
-      }
-
-      {:ok, child_pid} = DynamicSupervisor.start_child(pid, child_spec)
+      {:ok, child_pid} = DynamicSupervisor.start_child(pid, Telephone)
 
       Telephone.push(child_pid, next_pid)
       IO.puts("Count: #{Telephone.count(A)}")
-      new_node(parent_pid, pid, next_pid)
     end
 
     :ok = Telephone.message(A, 1)
